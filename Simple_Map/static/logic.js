@@ -1,7 +1,7 @@
 console.log("this is working")
 
 //create the map object with a center and zoom level
-let map = L.map('mapid').setView([37.6214, -122.3790], 5);
+let map = L.map('mapid').setView([37.5, -122.5], 10);
 
 //create tile layer that will be the background for the map
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -39,3 +39,30 @@ let line = [
 L.polyline(line, {
     color: "yellow"
  }).addTo(map);
+
+ // Add GeoJSON data.
+let sanFranAirport =
+{"type":"FeatureCollection","features":[{
+    "type":"Feature",
+    "properties":{
+        "id":"3469",
+        "name":"San Francisco International Airport",
+        "city":"San Francisco",
+        "country":"United States",
+        "faa":"SFO",
+        "icao":"KSFO",
+        "alt":"14",
+        "tz-offset":"-8",
+        "dst":"A",
+        "tz":"America/Los_Angeles"},
+        "geometry":{
+            "type":"Point",
+            "coordinates":[-122.375,37.61899948120117]}}
+]};
+
+L.geoJSON(sanFranAirport, {
+    onEachFeature: function(feature, layer) {
+        console.log(layer)
+        layer.bindPopup()
+    }
+}).addTo(map);
